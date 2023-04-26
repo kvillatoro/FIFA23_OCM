@@ -16,18 +16,28 @@ namespace FIFA23_OCM.Controllers
             _teamRosterRepository = new TeamRosterRepository();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            var astonVilla = _teamRosterRepository.GetAstonVillaRoster();
-            var fcBarcelona = _teamRosterRepository.GetFCBarcelonaRoster();
+            return View();
+        }
 
-            var teamRosters = new TeamRostersModel
+        [HttpGet]
+        public JsonResult GetRoster(string teamName)
+        {
+            Roster[] rosterData;
+            if(teamName == "FCBarcelona")
             {
-                AstonVilla = astonVilla,
-                FcBarcelona = fcBarcelona
-            };
-
-            return View(teamRosters);
+                rosterData = _teamRosterRepository.GetFCBarcelonaRoster();
+            }
+            else if(teamName == "AstonVilla")
+            {
+                rosterData = _teamRosterRepository.GetAstonVillaRoster();
+            }
+            else
+            {
+                return Json(new { error = "Invalid team name" });
+            }
+            return Json(rosterData);
         }
 
         public IActionResult Privacy()

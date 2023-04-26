@@ -343,11 +343,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kevin\\source\\VSCommunity Projects\\FIFA23_OCM\\FIFA23_OCM\\FIFA23_OCM.csproj",
+      "projectUniqueName": "C:\\Users\\kevin\\source\\VSCommunity Projects\\FIFA23_OCM_MVC\\FIFA23_OCM\\FIFA23_OCM.csproj",
       "projectName": "FIFA23_OCM",
-      "projectPath": "C:\\Users\\kevin\\source\\VSCommunity Projects\\FIFA23_OCM\\FIFA23_OCM\\FIFA23_OCM.csproj",
+      "projectPath": "C:\\Users\\kevin\\source\\VSCommunity Projects\\FIFA23_OCM_MVC\\FIFA23_OCM\\FIFA23_OCM.csproj",
       "packagesPath": "C:\\Users\\kevin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kevin\\source\\VSCommunity Projects\\FIFA23_OCM\\FIFA23_OCM\\obj\\",
+      "outputPath": "C:\\Users\\kevin\\source\\VSCommunity Projects\\FIFA23_OCM_MVC\\FIFA23_OCM\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

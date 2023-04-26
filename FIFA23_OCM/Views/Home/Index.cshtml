@@ -1,45 +1,79 @@
-﻿@model TeamRostersModel
+﻿<style>
+    .fixed-width-table {
+        table-layout: fixed;
+        width: 100%;
+    }
 
-<h1>Aston Villa</h1>
+    .fixed-width-table th {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 
-<table class="table table-hover">
+    .col-playerid {
+        width: 30%;
+    }
+
+    .col-firstname {
+        width: 35%;
+    }
+
+    .col-lastname {
+        width: 35%;
+    }
+</style>
+
+<select id="team-selector" class="form-select form-select-lg mb-3" style="width: auto;">
+    <option value="FCBarcelona" selected>FC Barcelona</option>
+    <option value="AstonVilla">Aston Villa</option>
+</select>
+
+<table id="roster-table" class="table table-hover fixed-width-table">
     <thead>
         <tr>
-            <th scope="col">PlayerID</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
+            <th class="col-playerid">PlayerID</th>
+            <th class="col-firstname">First Name</th>
+            <th class="col-lastname">Last Name</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var astonVillaPlayer in Model.AstonVilla)
-        {
-        <tr>
-            <th scope="row">@astonVillaPlayer.PlayerID</th>
-            <td>@astonVillaPlayer.FirstName</td>
-            <td>@astonVillaPlayer.LastName</td>
-        </tr>            
-        }
-    </tbody>
+    <tbody></tbody>
 </table>
 
-<h1>FC Barcelona</h1>
+<script>
+    $(document).ready(function () {
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">PlayerID</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var fcBarcelonaPlayer in Model.FcBarcelona)
-        {
-        <tr>
-            <th scope="row">@fcBarcelonaPlayer.PlayerID</th>
-            <td>@fcBarcelonaPlayer.FirstName</td>
-            <td>@fcBarcelonaPlayer.LastName</td>
-        </tr>            
-        }
-    </tbody>
-</table>
+        $('#team-selector').change(function () {
+            var teamName = $('#team-selector').val();
+            
+            $.ajax({
+                url: '/Home/GetRoster',
+                type: 'GET',
+                dataType: 'json',
+                data: { teamName: teamName },
+                success: function (data) {
+                    var $tbody = $('#roster-table tbody');
+                    $tbody.empty();
+                    
+                    if (data.hasOwnProperty('error')) {
+                        var $tr = $('<tr>');
+                        $tr.append($('<td colspan="3">').text(data.error));
+                        $tbody.append($tr);
+                    } 
+                    else 
+                    {
+                        data.forEach(function (roster) {
+                            var $tr = $('<tr>');
+                            $tr.append($('<td>').text(roster.playerID));
+                            $tr.append($('<td>').text(roster.firstName));
+                            $tr.append($('<td>').text(roster.lastName));
+                            $tbody.append($tr);
+                        });
+                    }
+                }
+
+            });
+
+        });
+
+        $('#team-selector').trigger('change');
+    });
+</script>
