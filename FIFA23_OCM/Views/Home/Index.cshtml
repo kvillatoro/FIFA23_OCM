@@ -1,0 +1,45 @@
+﻿@model TeamRostersModel
+
+<h1>Aston Villa</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">PlayerID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var astonVillaPlayer in Model.AstonVilla)
+        {
+        <tr>
+            <th scope="row">@astonVillaPlayer.PlayerID</th>
+            <td>@astonVillaPlayer.FirstName</td>
+            <td>@astonVillaPlayer.LastName</td>
+        </tr>            
+        }
+    </tbody>
+</table>
+
+<h1>FC Barcelona</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">PlayerID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var fcBarcelonaPlayer in Model.FcBarcelona)
+        {
+        <tr>
+            <th scope="row">@fcBarcelonaPlayer.PlayerID</th>
+            <td>@fcBarcelonaPlayer.FirstName</td>
+            <td>@fcBarcelonaPlayer.LastName</td>
+        </tr>            
+        }
+    </tbody>
+</table>
