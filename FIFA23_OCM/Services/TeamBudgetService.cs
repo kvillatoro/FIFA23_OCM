@@ -26,7 +26,7 @@ namespace FIFA23_OCM.Services
             }
             else
             {
-                throw new ArgumentException($"Invalid team name: {teamName}");
+                throw new ArgumentException($"Invalid team budget: {teamName}");
             }
         }
     }

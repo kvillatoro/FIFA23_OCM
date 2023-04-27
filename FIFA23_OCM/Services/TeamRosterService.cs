@@ -15,11 +15,11 @@ namespace FIFA23_OCM.Services
         public PlayerInfoModel[] GetRoster(string teamName)
         {
             PlayerInfoModel[] rosterData;
-            if(teamName == "Bournemouth") 
+            if (teamName == "Bournemouth") 
             {
                 rosterData = _teamRosterRepository.GetBournemouthRoster();
             }
-            else if(teamName == "Aston Villa") 
+            else if (teamName == "Aston Villa") 
             {
                 rosterData = _teamRosterRepository.GetAstonVillaRoster();
             }
