@@ -24,13 +24,12 @@ namespace FIFA23_OCM.Controllers
             return View();
         }
 
-        //Used in Index
         [HttpGet]
         public JsonResult GetRoster(string teamName)
         {
             try
             {
-                PlayerInfo[] rosterData = _teamRosterService.GetRoster(teamName);
+                PlayerInfoModel[] rosterData = _teamRosterService.GetRoster(teamName);
                 return Json(rosterData);
             }
             catch (ArgumentException ex)
@@ -39,6 +38,7 @@ namespace FIFA23_OCM.Controllers
             }
         }
 
+        [HttpGet]
         public JsonResult GetTeamBudget(string teamName) 
         {
             try
