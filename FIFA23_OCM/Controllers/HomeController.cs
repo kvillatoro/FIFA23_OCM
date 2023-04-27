@@ -2,18 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using FIFA23_OCM.Data;
+using FIFA23_OCM.Services;
 
 namespace FIFA23_OCM.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly TeamRosterRepository _teamRosterRepository;
+        private readonly TeamRosterService _teamRosterService;
+        private readonly ITeamBudgetService _teamBudgetService;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _teamRosterRepository = new TeamRosterRepository();
+            _teamRosterService = new TeamRosterService();
+            _teamBudgetService = new TeamBudgetService();
         }
 
         public IActionResult Index()
@@ -21,28 +24,32 @@ namespace FIFA23_OCM.Controllers
             return View();
         }
 
+        //Used in Index
         [HttpGet]
         public JsonResult GetRoster(string teamName)
         {
-            Roster[] rosterData;
-            if(teamName == "FCBarcelona")
+            try
             {
-                rosterData = _teamRosterRepository.GetFCBarcelonaRoster();
+                PlayerInfo[] rosterData = _teamRosterService.GetRoster(teamName);
+                return Json(rosterData);
             }
-            else if(teamName == "AstonVilla")
+            catch (ArgumentException ex)
             {
-                rosterData = _teamRosterRepository.GetAstonVillaRoster();
+                return Json(new { error = ex.Message });
             }
-            else
-            {
-                return Json(new { error = "Invalid team name" });
-            }
-            return Json(rosterData);
         }
 
-        public IActionResult Privacy()
+        public JsonResult GetTeamBudget(string teamName) 
         {
-            return View();
+            try
+            {
+                decimal budget = _teamBudgetService.GetTeamBudget(teamName);
+                return Json(new { budget = budget });
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(new {error = ex.Message});
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

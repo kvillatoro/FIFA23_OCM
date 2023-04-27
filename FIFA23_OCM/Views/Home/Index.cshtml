@@ -10,70 +10,102 @@
     }
 
     .col-playerid {
-        width: 30%;
+        width: 25%;
     }
 
     .col-firstname {
-        width: 35%;
+        width: 25%;
     }
 
     .col-lastname {
-        width: 35%;
+        width: 25%;
+    }
+
+    .col-sofifa {
+        width: 25%;
     }
 </style>
 
-<select id="team-selector" class="form-select form-select-lg mb-3" style="width: auto;">
-    <option value="FCBarcelona" selected>FC Barcelona</option>
-    <option value="AstonVilla">Aston Villa</option>
-</select>
+<div class="team-info">
+    <select id="team-selector" class="form-select form-select-lg mb-3" style="width: auto; display: inline-block;">
+        <option value="AstonVilla" selected>Aston Villa</option>
+        <option value="Bournemouth">Bournemouth</option>
+    </select>
 
-<table id="roster-table" class="table table-hover fixed-width-table">
-    <thead>
-        <tr>
-            <th class="col-playerid">PlayerID</th>
-            <th class="col-firstname">First Name</th>
-            <th class="col-lastname">Last Name</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+    <h1 style="display: inline-block; float: right;">Team Budget: <span id="budget" class="badge bg-secondary">Loading...</span></h1>
+</div>
+
+<div class="top-table-row">
+    <table id="roster-table" class="table table-hover fixed-width-table">
+        <thead>
+            <tr>
+                <th class="col-playerid">PlayerID</th>
+                <th class="col-firstname">First Name</th>
+                <th class="col-lastname">Last Name</th>
+                <th class="col-sofifa">SoFIFA Link</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 <script>
+    
+    function getBudget(teamName){
+        $.ajax({
+            url: '/Home/GetTeamBudget',
+            type: 'GET',
+            dataType: 'json',
+            data: {teamName : teamName},
+            success: function (data) {
+                $('#budget').text('£' + data.budget.toLocaleString());
+            },
+            error: function () {
+                $('#budget').text('Error');
+            }
+        });
+    }
+
+    function getRoster(teamName){
+        $.ajax({
+            url: '/Home/GetRoster',
+            type: 'GET',
+            dataType: 'json',
+            data: { teamName: teamName },
+            success: function (data) {
+                var $tbody = $('#roster-table tbody');
+                $tbody.empty();
+
+                if (data.hasOwnProperty('error')) {
+                    var $tr = $('<tr>');
+                    $tr.append($('<td colspan="3">').text(data.error));
+                    $tbody.append($tr);
+                }
+                else {
+                    data.forEach(function (roster) {
+                        var $tr = $('<tr>');
+                        $tr.append($('<td>').text(roster.playerID));
+                        $tr.append($('<td>').text(roster.firstName));
+                        $tr.append($('<td>').text(roster.lastName));
+                        var $link = $('<a>').attr('href', roster.soFIFAURL).text(roster.soFIFAURL);
+                        $tr.append($('<td>').html($link));
+                        $tbody.append($tr);
+                    });
+                }
+            }
+        });
+    }
+    
     $(document).ready(function () {
 
+        getBudget($('#team-selector').val());
+        getRoster($('#team-selector').val());
+
         $('#team-selector').change(function () {
-            var teamName = $('#team-selector').val();
-            
-            $.ajax({
-                url: '/Home/GetRoster',
-                type: 'GET',
-                dataType: 'json',
-                data: { teamName: teamName },
-                success: function (data) {
-                    var $tbody = $('#roster-table tbody');
-                    $tbody.empty();
-                    
-                    if (data.hasOwnProperty('error')) {
-                        var $tr = $('<tr>');
-                        $tr.append($('<td colspan="3">').text(data.error));
-                        $tbody.append($tr);
-                    } 
-                    else 
-                    {
-                        data.forEach(function (roster) {
-                            var $tr = $('<tr>');
-                            $tr.append($('<td>').text(roster.playerID));
-                            $tr.append($('<td>').text(roster.firstName));
-                            $tr.append($('<td>').text(roster.lastName));
-                            $tbody.append($tr);
-                        });
-                    }
-                }
-
-            });
-
+            var teamName = $(this).val();
+            getBudget(teamName);
+            getRoster(teamName);
         });
-
-        $('#team-selector').trigger('change');
     });
+
 </script>
