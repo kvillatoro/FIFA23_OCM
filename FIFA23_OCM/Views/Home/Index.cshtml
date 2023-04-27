@@ -10,19 +10,22 @@
     }
 
     .col-playerid {
-        width: 25%;
+        width: 20%;
     }
 
     .col-firstname {
-        width: 25%;
+        width: 20%;
     }
 
     .col-lastname {
-        width: 25%;
+        width: 20%;
     }
 
     .col-sofifa {
-        width: 25%;
+        width: 20%;
+    }
+    .col-cost {
+        width: 20%;
     }
 </style>
 
@@ -35,7 +38,8 @@
     <h1 style="display: inline-block; float: right;">Team Budget: <span id="budget" class="badge bg-secondary fixed-width">Loading...</span></h1>
 </div>
 
-<div class="top-table-row">
+<div class="roster-table-div">
+    <h1>Team Roster</h1>
     <table id="roster-table" class="table table-hover fixed-width-table">
         <thead>
             <tr>
@@ -43,6 +47,23 @@
                 <th class="col-firstname">First Name</th>
                 <th class="col-lastname">Last Name</th>
                 <th class="col-sofifa">SoFIFA Link</th>
+                <th class="col-cost">Cost</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div class="transfer-list-table-div">
+    <h1>Transfer List</h1>
+    <table id="transfer-list-table" class="table table-hover fixed-width-table">
+        <thead>
+            <tr>
+                <th class="col-playerid">PlayerID</th>
+                <th class="col-firstname">First Name</th>
+                <th class="col-lastname">Last Name</th>
+                <th class="col-sofifa">SoFIFA Link</th>
+                <th class="col-cost">Cost</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -89,6 +110,7 @@
                         $tr.append($('<td>').text(roster.lastName));
                         var $link = $('<a>').attr('href', roster.soFIFAURL).text(roster.soFIFAURL);
                         $tr.append($('<td>').html($link));
+                        $tr.append($('<td>').text('£' + roster.cost.toLocaleString()));
                         $tbody.append($tr);
                     });
                 }
@@ -96,6 +118,10 @@
         });
     }
     
+    //function getTransferList(){
+
+    //}
+
     $(document).ready(function () {
 
         getBudget($('#team-selector').val());
