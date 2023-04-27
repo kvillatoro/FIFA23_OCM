@@ -1,4 +1,7 @@
-﻿<style>
+﻿@using System.Linq
+@model FIFA23_OCM.ViewModels.TeamBudgetViewModel
+
+<style>
     .fixed-width-table {
         table-layout: fixed;
         width: 100%;
@@ -31,8 +34,10 @@
 
 <div class="team-info">
     <select id="team-selector" class="form-select form-select-lg mb-3" style="width: auto; display: inline-block;">
-        <option value="AstonVilla" selected>Aston Villa</option>
-        <option value="Bournemouth">Bournemouth</option>
+        @foreach (var teamNames in Model.TeamBudgets)
+        {
+            <option value="@teamNames.Key">@teamNames.Key</option>
+        }
     </select>
 
     <h1 style="display: inline-block; float: right;">Team Budget: <span id="budget" class="badge bg-secondary fixed-width">Loading...</span></h1>

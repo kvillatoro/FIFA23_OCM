@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using FIFA23_OCM.Data;
 using FIFA23_OCM.Services;
+using FIFA23_OCM.ViewModels;
 
 namespace FIFA23_OCM.Controllers
 {
@@ -21,7 +22,11 @@ namespace FIFA23_OCM.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var teamBudgetPopulator = new TeamBudgetPopulator();
+            var teamBudgets = teamBudgetPopulator.PopulateTeamBudgets();
+            var viewModel = new TeamBudgetViewModel {TeamBudgets = teamBudgets }; 
+
+            return View(viewModel);
         }
 
         [HttpGet]
