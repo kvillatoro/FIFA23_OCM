@@ -16,6 +16,7 @@ CSS
 Bootstrap
 
 Installation
+
 Clone the repository to your local machine.
 Open the solution file in Visual Studio.
 Restore the packages and dependencies using NuGet Package Manager.
