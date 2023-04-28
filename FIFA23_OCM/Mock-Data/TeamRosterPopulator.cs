@@ -29,7 +29,7 @@ namespace FIFA23_OCM.Data
             {
                 new PlayerInfoModel { PlayerID = 12, FirstName = "Norberto", LastName = "Neto", SoFIFAURL = "https://sofifa.com/player/194404", Cost = 7300000m },
                 new PlayerInfoModel { PlayerID = 13, FirstName = "Adam", LastName = "Smith", SoFIFAURL = "https://sofifa.com/player/190885", Cost = 2700000m },
-                new PlayerInfoModel { PlayerID = 14, FirstName = "Chris", LastName = "Mepham", SoFIFAURL = "https://sofifa.com/player/233201", Cost = 200000m },
+                new PlayerInfoModel { PlayerID = 14, FirstName = "Chris", LastName = "Mepham", SoFIFAURL = "https://sofifa.com/player/233201", Cost = 2000000m },
                 new PlayerInfoModel { PlayerID = 15, FirstName = "Marcos", LastName = "Senesi", SoFIFAURL = "https://sofifa.com/player/236506", Cost = 7300000m },
                 new PlayerInfoModel { PlayerID = 16, FirstName = "Lloyd", LastName = "Kelly", SoFIFAURL = "https://sofifa.com/player/231512", Cost = 4700000m },
                 new PlayerInfoModel { PlayerID = 17, FirstName = "Lewis", LastName = "Cook", SoFIFAURL = "https://sofifa.com/player/224294", Cost = 4700000m },
