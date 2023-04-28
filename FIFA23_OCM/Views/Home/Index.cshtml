@@ -1,34 +1,48 @@
 ﻿@using System.Linq
-@model FIFA23_OCM.ViewModels.TeamBudgetViewModel
+@model FIFA23_OCM.ViewModels.TeamBudgetViewModel;
 
 <style>
-    .fixed-width-table {
-        table-layout: fixed;
-        width: 100%;
-    }
+   *{
+       box-sizing: border-box;
+   }
+   
+   .roster-row{
+       margin-left: -5px;
+       margin-right: -5px;
+   }
 
-    .fixed-width-table th {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
+   .roster-column{
+       float: left;
+       width: 50%;
+       padding: 5px;
+   }
 
-    .col-playerid {
-        width: 20%;
-    }
+   .roster-row::after{
+       content: "";
+       clear: both;
+       display: table;
+   }
 
-    .col-firstname {
-        width: 20%;
-    }
+   table{
+       border-collapse: collapse;
+       border-spacing: 0;
+       width: 100%;
+       border: 1px solid #ddd;
+   }
 
-    .col-lastname {
-        width: 20%;
-    }
+   th, td{
+       text-align: left;
+       padding: 16px;
+   }
 
-    .col-sofifa {
-        width: 20%;
-    }
-    .col-cost {
-        width: 20%;
+   tr:nth-child(even){
+       background-color: #f2f2f2;
+   }
+
+    @@media screen and (max-width: 600px) {
+        .roster-column {
+            width: 100%;
+        }
     }
 </style>
 
@@ -44,33 +58,38 @@
 </div>
 
 <div class="roster-row">
-    <h1>Team Roster</h1>
-    <table id="roster-table" class="table table-hover fixed-width-table">
-        <thead>
-            <tr>
-                <th class="col-playerid">PlayerID</th>
-                <th class="col-firstname">First Name</th>
-                <th class="col-lastname">Last Name</th>
-                <th class="col-sofifa">SoFIFA Link</th>
-                <th class="col-cost">Cost</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="roster-column">
+        <h1>Team Roster</h1>
+        <table id="roster-table" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>PlayerID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>SoFIFA Link</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-    <h1>Transfer List</h1>
-    <table id="transfer-list-table" class="table table-hover fixed-width-table">
-        <thead>
-            <tr>
-                <th class="col-playerid">PlayerID</th>
-                <th class="col-firstname">First Name</th>
-                <th class="col-lastname">Last Name</th>
-                <th class="col-sofifa">SoFIFA Link</th>
-                <th class="col-cost">Cost</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="roster-column">
+        <h1 style="width: auto; display: inline-block;">Transfer List</h1>
+        <button id="addPlayerBtn" type="button" style="width: auto; display: inline-block; float: right; font-size: 22px; font-weight: bold" class="btn btn-primary btn-lg">+</button>
+        <table id="transfer-list-table" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>PlayerID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>SoFIFA Link</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 
@@ -113,7 +132,7 @@
                         $tr.append($('<td>').text(roster.firstName));
                         $tr.append($('<td>').text(roster.lastName));
                         var $link = $('<a>').attr('href', roster.soFIFAURL).text(roster.soFIFAURL);
-                        $tr.append($('<td>').html($link));
+                        $tr.append($('<td>').html($link.attr('target', '_blank')));
                         $tr.append($('<td>').text('£' + roster.cost.toLocaleString()));
                         $tbody.append($tr);
                     });
@@ -121,10 +140,6 @@
             }
         });
     }
-    
-    //function getTransferList(){
-
-    //}
 
     $(document).ready(function () {
 
